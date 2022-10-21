@@ -73,6 +73,7 @@ model Club {
   participants User[] @relation("clubsParticipant")
   creator      User   @relation("clubsOwner", fields: [creatorId], references: [id])
   creatorId    String
+  posts        Post[] @relation("clubPosts")
 
   createAt DateTime @default(now())
 }
@@ -86,6 +87,8 @@ model Post {
   creator   User      @relation("postsCreated", fields: [creatorId], references: [id])
   creatorId String
   comments  Comment[]
+  club      Club?     @relation("clubPosts", fields: [clubId], references: [id])
+  clubId    String?
 
   createdAt DateTime @default(now())
 }
@@ -98,7 +101,19 @@ model Comment {
   creatorId String
   post      Post?   @relation(fields: [postId], references: [id])
   postId    String?
+  news      News?   @relation("newsComments", fields: [newsId], references: [id])
+  newsId    String?
   likedBy   User[]  @relation("likedComments")
 
   createdAt DateTime @default(now())
+}
+
+model News {
+  id String @id @default(cuid())
+
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+
+  comments Comment[] @relation("newsComments")
 }
