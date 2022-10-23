@@ -113,6 +113,7 @@ model News {
 
   title     String
   content   String
+  image     String
   createdAt DateTime @default(now())
 
   comments Comment[] @relation("newsComments")

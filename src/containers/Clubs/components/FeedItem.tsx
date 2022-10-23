@@ -4,8 +4,6 @@ import { FaRegComment } from 'react-icons/fa';
 import { dayJsFrom } from '../../../utils/dayJsFrom';
 
 const FeedItem = ({ data, author }: any) => {
-	console.log(data);
-
 	return (
 		<Box
 			cursor={'pointer'}

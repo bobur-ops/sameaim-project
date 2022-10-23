@@ -3,37 +3,38 @@ import { useSession } from 'next-auth/react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { trpc } from '../../../utils/trpc';
 import Feed from '../components/Feed';
 import SideBar from '../components/SideBar';
 
 const Club = ({ clubDetails }: any) => {
-	const [buttonLoading, setButtonLoading] = useState(false);
-	const [isMember, setIsMember] = useState(false);
-
 	const { data: session, status } = useSession();
-	const isAuthor = session?.user?.id === clubDetails?.creator?.id;
-
 	const router = useRouter();
+
+	const isMember = clubDetails?.participants.some(
+		(item: any) => item.id === session?.user?.id
+	);
+	console.log(isMember);
+
+	const isAuthor = session?.user?.id === clubDetails?.creator?.id;
+	const joinMutation = trpc.club.joinClub.useMutation({
+		onSettled: (data) => {
+			router.reload(window.location.pathname);
+		},
+	});
+	const leaveMutation = trpc.club.leaveClub.useMutation({
+		onSettled: (data) => {
+			router.reload(window.location.pathname);
+		},
+	});
 	const { id } = router.query;
 
 	const joinToClub = async () => {
-		// try {
-		// 	setButtonLoading(true);
-		// 	if (isMember) {
-		// 		await leaveClubApi({ user: JSON.stringify(session) }, clubDetails._id);
-		// 	} else {
-		// 		await joinToClubApi(
-		// 			{ user: JSON.stringify(session) },
-		// 			clubDetails._id,
-		// 			session._id
-		// 		);
-		// 	}
-		// 	setButtonLoading(false);
-		// 	router.reload();
-		// } catch (error) {
-		// 	console.log(error);
-		// 	setButtonLoading(false);
-		// }
+		if (isMember) {
+			leaveMutation.mutate({ clubId: clubDetails?.id });
+		} else {
+			joinMutation.mutate({ clubId: clubDetails?.id });
+		}
 	};
 
 	return (
@@ -48,12 +49,7 @@ const Club = ({ clubDetails }: any) => {
 				</Box>
 			) : session ? (
 				<Box mb={3}>
-					<Button
-						loadingText="Joining..."
-						isLoading={buttonLoading}
-						colorScheme={isMember ? 'red' : 'blue'}
-						onClick={joinToClub}
-					>
+					<Button colorScheme={isMember ? 'red' : 'green'} onClick={joinToClub}>
 						{isMember ? 'Leave' : 'Join'}
 					</Button>
 				</Box>

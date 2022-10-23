@@ -82,11 +82,7 @@ const Profile = ({ user }: any) => {
 					<Heading as="h1">My Clubs</Heading>
 					{user?.clubsOwner?.length ? (
 						user?.clubsOwner?.map((club: any) => (
-							<NextLink scroll={false} key={club.id} href={`/clubs/${club.id}`}>
-								<Link>
-									<ClubsItem data={club} />
-								</Link>
-							</NextLink>
+							<ClubsItem isMyClub data={club} key={club.id} />
 						))
 					) : (
 						<NextLink href={'/create_club'}>

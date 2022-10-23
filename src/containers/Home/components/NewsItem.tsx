@@ -14,7 +14,7 @@ const NewsItem = ({ data }: any) => {
 				height="186px"
 				objectFit="cover"
 				alt="Image"
-				src={data.img}
+				src={data.image}
 				mb={13}
 			/>
 			<Box pl="8px">
@@ -22,7 +22,7 @@ const NewsItem = ({ data }: any) => {
 					{data.title}
 				</Text>
 				<Text mb="14px" fontSize="sm">
-					{sliceText(data.description, 150)}
+					{sliceText(data.content, 150)}
 				</Text>
 				<Button fontSize="sm" bg="#7195E1" color="white">
 					Read More

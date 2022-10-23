@@ -43,20 +43,6 @@ const SignIn = () => {
 							>
 								Sign in Using Google
 							</Button>
-							<Button
-								bg={'blue.400'}
-								color={'white'}
-								size={'lg'}
-								rightIcon={<BsFacebook />}
-								_hover={{
-									bg: 'blue.500',
-								}}
-								onClick={() =>
-									signIn('facebook', { callbackUrl: 'http://localhost:3000' })
-								}
-							>
-								Sign in Using Facebook
-							</Button>
 						</Stack>
 					</Stack>
 				</Box>

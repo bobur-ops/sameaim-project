@@ -3,6 +3,9 @@ import { z } from 'zod';
 import { protectedProcedure, publicProcedure, router } from '../trpc';
 
 export const postRouter = router({
+	getAllPosts: publicProcedure.query(({ ctx }) => {
+		return ctx.prisma.post.findMany();
+	}),
 	getPost: publicProcedure
 		.input(z.object({ postId: z.string() }))
 		.query(async ({ ctx, input }) => {
@@ -69,9 +72,22 @@ export const postRouter = router({
 
 			return newPost;
 		}),
-});
 
-// id          String @id @default(cuid())
-// title       String
-// content     String
-// description String
+	deletePost: protectedProcedure
+		.input(z.object({ postId: z.string(), postCreatorId: z.string() }))
+		.mutation(async ({ ctx, input }) => {
+			const userId = ctx.session.user.id;
+
+			const isAuthor = userId === input.postCreatorId;
+
+			if (!isAuthor) {
+				throw new TRPCError({ code: 'FORBIDDEN' });
+			}
+
+			const deletePost = await ctx.prisma.post.delete({
+				where: { id: input.postId },
+			});
+
+			return deletePost;
+		}),
+});
