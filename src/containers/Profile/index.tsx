@@ -11,18 +11,14 @@ import {
 	Text,
 	VStack,
 } from '@chakra-ui/react';
-import { deleteCookie, getCookie } from 'cookies-next';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { BsFillPersonFill } from 'react-icons/bs';
+import { Key } from 'react';
 import ClubsItem from './components/ClubsItem';
 
 const Profile = () => {
 	const { data: session, status } = useSession();
-	const [myClubs, setMyClubs] = useState([]);
-	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 
 	// const getMyClubs = async () => {
@@ -41,16 +37,6 @@ const Profile = () => {
 	// 	}
 	// };
 
-	// const logOut = () => {
-	// 	deleteCookie('user');
-	// 	setUser(null);
-	// 	router.push('/');
-	// };
-
-	useEffect(() => {
-		console.log(session);
-	}, []);
-
 	if (!session)
 		return (
 			<Box display={'flex'} gap={'10px'}>
@@ -61,83 +47,83 @@ const Profile = () => {
 			</Box>
 		);
 
-	// return (
-	// 	<Box>
-	// 		<Stack
-	// 			gap={'30px'}
-	// 			flexDirection={{ base: 'column', md: 'row' }}
-	// 			align={'center'}
-	// 			mb={30}
-	// 		>
-	// 			<Box>
-	// 				<Avatar size={'2xl'} name={session.user.name} />
-	// 			</Box>
-	// 			<VStack>
-	// 				<Text fontWeight={'semibold'} fontSize={'3xl'}>
-	// 					{session.fullName}
-	// 				</Text>
-	// 				<Text>{session.email}</Text>
-	// 			</VStack>
-	// 		</Stack>
-	// 		<Box>
-	// 			<Heading mb={5} as={'h1'}>
-	// 				Joined Clubs
-	// 			</Heading>
-	// 			<Stack flex={'start'}>
-	// 				{session.joinedClubs.length ? (
-	// 					session.joinedClubs.map((club) => (
-	// 						<NextLink
-	// 							scroll={false}
-	// 							key={club.clubId}
-	// 							href={`/clubs/${club.clubId}`}
-	// 						>
-	// 							<Link>
-	// 								<ClubsItem data={club} />
-	// 							</Link>
-	// 						</NextLink>
-	// 					))
-	// 				) : (
-	// 					<Text fontSize={'2xl'} color="red.400" fontWeight={'medium'}>
-	// 						You are not in any club
-	// 					</Text>
-	// 				)}
-	// 			</Stack>
-	// 			<Stack mt={70}>
-	// 				<Heading as="h1">My Clubs</Heading>
-	// 				{loading ? (
-	// 					<HStack justifyContent={'center'}>
-	// 						<Spinner
-	// 							thickness="4px"
-	// 							speed="0.65s"
-	// 							emptyColor="gray.200"
-	// 							color="blue.500"
-	// 							size="xl"
-	// 						/>
-	// 					</HStack>
-	// 				) : myClubs.length ? (
-	// 					myClubs.map((club: any) => (
-	// 						<NextLink
-	// 							scroll={false}
-	// 							key={club.clubId}
-	// 							href={`/clubs/${club.clubId}`}
-	// 						>
-	// 							<Link>
-	// 								<ClubsItem data={club} />
-	// 							</Link>
-	// 						</NextLink>
-	// 					))
-	// 				) : (
-	// 					<Text>There are not clubs</Text>
-	// 				)}
-	// 			</Stack>
-	// 		</Box>
-	// 		<Box mt={20}>
-	// 			<Button colorScheme={'red'} fontSize="2xl" onClick={logOut}>
-	// 				Log Out
-	// 			</Button>
-	// 		</Box>
-	// 	</Box>
-	// );
+	return (
+		<Box>
+			<Stack
+				gap={'30px'}
+				flexDirection={{ base: 'column', md: 'row' }}
+				align={'center'}
+				mb={30}
+			>
+				<Box>
+					<Avatar
+						size={'2xl'}
+						name={session?.user?.name?.toString()}
+						src={session?.user?.image?.toString()}
+					/>
+				</Box>
+				<VStack>
+					<Text fontWeight={'semibold'} fontSize={'3xl'}>
+						{session.user?.name}
+					</Text>
+					<Text>{session.user?.email}</Text>
+				</VStack>
+			</Stack>
+			<Box>
+				<Heading mb={5} as={'h1'}>
+					Joined Clubs
+				</Heading>
+				<Stack flex={'start'}>
+					{session?.user?.clubsParticipant?.length ? (
+						session?.user?.clubsParticipant?.map(
+							(club: { id: Key | null | undefined }) => (
+								<NextLink
+									scroll={false}
+									key={club.id}
+									href={`/clubs/${club.id}`}
+								>
+									<Link>
+										<ClubsItem data={club} />
+									</Link>
+								</NextLink>
+							)
+						)
+					) : (
+						<Text fontSize={'2xl'} color="red.400" fontWeight={'medium'}>
+							You are not in any club
+						</Text>
+					)}
+				</Stack>
+				<Stack mt={70}>
+					<Heading as="h1">My Clubs</Heading>
+					{session?.user?.clubsOwner?.length ? (
+						session?.user?.clubsOwner?.map((club: any) => (
+							<NextLink scroll={false} key={club.id} href={`/clubs/${club.id}`}>
+								<Link>
+									<ClubsItem data={club} />
+								</Link>
+							</NextLink>
+						))
+					) : (
+						<NextLink href={'/create_club'}>
+							<Link fontSize={'xl'} color={'blue.400'} fontWeight={'semibold'}>
+								Create your first club
+							</Link>
+						</NextLink>
+					)}
+				</Stack>
+			</Box>
+			<Box mt={20}>
+				<Button
+					colorScheme={'red'}
+					fontSize="2xl"
+					onClick={() => signOut({ callbackUrl: '/' })}
+				>
+					Log Out
+				</Button>
+			</Box>
+		</Box>
+	);
 };
 
 export default Profile;

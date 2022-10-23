@@ -29,7 +29,7 @@ export const clubRouter = router({
 			.sort((a, b) => {
 				return b.participants.length - a.participants.length;
 			})
-			.slice(0, 4);
+			.slice(0, 5);
 		return rating;
 	}),
 	getClubBySearch: publicProcedure

@@ -8,44 +8,45 @@ import {
 	Input,
 	Stack,
 } from '@chakra-ui/react';
-import { getCookie } from 'cookies-next';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 // import { createPostApi, getUserApi } from '../../../api/client'
 import TextEditor from '../../../components/TextEditor';
+import { trpc } from '../../../utils/trpc';
 
 import { uniqueId } from '../../../utils/uniqueId';
 
 const CreatePage = ({ clubID, authorId }: any) => {
 	const [title, setTitle] = useState('');
 	const [contentValue, setContentValue] = useState('');
-	const [loading, setLoading] = useState(false);
-	const [pageLoading, setPageLoading] = useState(false);
 	const [description, setDescription] = useState('');
+	const [loading, setLoading] = useState(false);
+	const { data: session, status } = useSession();
 
 	const router = useRouter();
-
 	const { id } = router.query;
 
-	const getMyUser = async () => {
-		setPageLoading(true);
-		const cookieUser = getCookie('user');
-		if (cookieUser) {
-			const res = await getUserApi(cookieUser);
-			if (res.data.userId !== authorId) {
-				router.push('/');
-			}
-			setPageLoading(false);
-		} else {
-			setPageLoading(false);
+	useEffect(() => {
+		if (session?.user?.id !== authorId) {
 			router.push('/');
 		}
-	};
-
-	useEffect(() => {
-		getMyUser();
 	}, []);
+
+	// const { mutate } = trpc.club.createClub.useMutation({
+	// 	onSettled: (data) => {
+	// 		router.push(`/clubs/${data?.id}`);
+	// 	},
+	// });
+	// const submitClub = (data: any) => {
+	// 	mutate(data);
+	// };
+	const { mutate } = trpc.post.createPost.useMutation({
+		onSettled: (data) => {
+			router.push(`/clubs/${id}`);
+		},
+	});
 
 	const isDisabled = () => {
 		if (title && contentValue) {
@@ -55,28 +56,27 @@ const CreatePage = ({ clubID, authorId }: any) => {
 		}
 	};
 
-	const submitNewPost = async () => {
+	const submitNewPost = () => {
 		const data = {
 			title,
 			content: contentValue,
 			description,
-			postId: uniqueId('post'),
+			clubId: id,
 		};
+		// try {
+		// 	setLoading(true);
+		// 	const res = await createPostApi(clubID, data);
+		// 	setLoading(false);
+		// 	router.push(`/clubs/${id}`);
+		// 	setLoading(false);
+		// } catch (error) {
+		// 	setLoading(false);
+		// 	console.log(error: any);
+		// 	toast.error(`${error.response.data.message}`);
+		// }
 
-		try {
-			setLoading(true);
-			const res = await createPostApi(clubID, data);
-			setLoading(false);
-			router.push(`/clubs/${id}`);
-			setLoading(false);
-		} catch (error) {
-			setLoading(false);
-			console.log(error);
-			toast.error(`${error.response.data.message}`);
-		}
+		mutate(data);
 	};
-
-	if (pageLoading) return <div></div>;
 
 	return (
 		<Box>

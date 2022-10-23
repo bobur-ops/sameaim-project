@@ -113,7 +113,11 @@ const Navbar = (props: any) => {
 					</Button>
 				) : (
 					<HStack cursor={'pointer'} onClick={() => router.push('/profile')}>
-						<Avatar name={session?.user?.name} size={'md'} />
+						<Avatar
+							name={session?.user?.name?.toString()}
+							size={'md'}
+							src={session?.user?.image?.toString()}
+						/>
 						<Text>{session?.user?.name}</Text>
 					</HStack>
 				)}

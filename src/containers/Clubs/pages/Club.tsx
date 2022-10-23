@@ -1,15 +1,12 @@
 import { Box, Button, Link } from '@chakra-ui/react';
-import { getCookie } from 'cookies-next';
 import { useSession } from 'next-auth/react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-// import { joinToClubApi, leaveClubApi } from '../../../api/client'
-import { useGlobalContext } from '../../../context/GlobalContext';
+import { useState } from 'react';
 import Feed from '../components/Feed';
 import SideBar from '../components/SideBar';
 
-const Club = ({ clubDetails }) => {
+const Club = ({ clubDetails }: any) => {
 	const [buttonLoading, setButtonLoading] = useState(false);
 	const [isMember, setIsMember] = useState(false);
 
@@ -49,7 +46,7 @@ const Club = ({ clubDetails }) => {
 						</Link>
 					</NextLink>
 				</Box>
-			) : (
+			) : session ? (
 				<Box mb={3}>
 					<Button
 						loadingText="Joining..."
@@ -60,14 +57,18 @@ const Club = ({ clubDetails }) => {
 						{isMember ? 'Leave' : 'Join'}
 					</Button>
 				</Box>
+			) : (
+				<NextLink href={'/signin'}>
+					<Link color={'blue.400'}>Authorize to joing to this club</Link>
+				</NextLink>
 			)}
 			<Box display={'flex'} gap={10}>
 				<Box flex={1}>
 					<Feed posts={clubDetails.posts} />
 				</Box>
-				{/* <Box display={{ base: 'none', md: 'block' }} minW={'25%'}>
+				<Box display={{ base: 'none', md: 'block' }} minW={'25%'}>
 					<SideBar members={clubDetails.participants} />
-				</Box> */}
+				</Box>
 			</Box>
 		</Box>
 	);

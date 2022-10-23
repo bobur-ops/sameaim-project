@@ -1,31 +1,16 @@
 import {
 	Box,
 	Button,
-	Checkbox,
 	Flex,
-	FormControl,
-	FormLabel,
 	Heading,
-	Input,
-	Link,
 	Stack,
-	Text,
 	useColorModeValue,
 } from '@chakra-ui/react';
-// import { setCookie } from 'cookies-next';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-// import toast from 'react-hot-toast';
-// import { loginUser } from '../../api/client';
-// import { useGlobalContext } from '../../context/GlobalContext';
 import { signIn } from 'next-auth/react';
+import { BsFacebook } from 'react-icons/bs';
 import { FcGoogle } from 'react-icons/fc';
 
 const SignIn = () => {
-	const router = useRouter();
-	const [loading, setLoading] = useState(false);
-
 	return (
 		<Flex
 			minH={'100vh'}
@@ -43,7 +28,7 @@ const SignIn = () => {
 					p={8}
 				>
 					<Stack spacing={4}>
-						<Stack spacing={10}>
+						<Stack spacing={5}>
 							<Button
 								bg={'blue.400'}
 								color={'white'}
@@ -58,6 +43,20 @@ const SignIn = () => {
 							>
 								Sign in Using Google
 							</Button>
+							{/* <Button
+								bg={'blue.400'}
+								color={'white'}
+								size={'lg'}
+								rightIcon={<BsFacebook />}
+								_hover={{
+									bg: 'blue.500',
+								}}
+								onClick={() =>
+									signIn('facebook', { callbackUrl: 'http://localhost:3000' })
+								}
+							>
+								Sign in Using Facebook
+							</Button> */}
 						</Stack>
 					</Stack>
 				</Box>

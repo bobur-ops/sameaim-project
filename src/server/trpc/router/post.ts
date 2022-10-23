@@ -8,6 +8,10 @@ export const postRouter = router({
 		.query(async ({ ctx, input }) => {
 			const post = await ctx.prisma.post.findFirst({
 				where: { id: input.postId },
+				include: {
+					creator: true,
+					comments: true,
+				},
 			});
 
 			return post;
@@ -45,6 +49,11 @@ export const postRouter = router({
 					creator: {
 						connect: {
 							id: userId,
+						},
+					},
+					club: {
+						connect: {
+							id: input.clubId,
 						},
 					},
 				},

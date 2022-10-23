@@ -36,7 +36,7 @@ const Rating = ({ data }: any) => {
 							<Tr
 								cursor="pointer"
 								onClick={() => router.push(`/clubs/${item.id}`)}
-								key={item.clubId}
+								key={item.id}
 							>
 								<Td>#{index + 1}</Td>
 								<Td>{item.name}</Td>
