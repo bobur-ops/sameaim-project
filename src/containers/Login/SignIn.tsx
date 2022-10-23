@@ -43,7 +43,7 @@ const SignIn = () => {
 							>
 								Sign in Using Google
 							</Button>
-							{/* <Button
+							<Button
 								bg={'blue.400'}
 								color={'white'}
 								size={'lg'}
@@ -56,7 +56,7 @@ const SignIn = () => {
 								}
 							>
 								Sign in Using Facebook
-							</Button> */}
+							</Button>
 						</Stack>
 					</Stack>
 				</Box>

@@ -3,7 +3,7 @@ import { Box, HStack, Icon, Stack, Text } from '@chakra-ui/react';
 import { FaRegComment } from 'react-icons/fa';
 import { dayJsFrom } from '../../../utils/dayJsFrom';
 
-const FeedItem = ({ data }) => {
+const FeedItem = ({ data, author }: any) => {
 	console.log(data);
 
 	return (
@@ -21,8 +21,7 @@ const FeedItem = ({ data }) => {
 				Posted by{' '}
 				<Text display={'inline-block'} color={'blue'} fontWeight={'medium'}>
 					{' '}
-					{/* {toJs(data.author).fullName}{' '} */}
-					{/* {data.creator.name} */}
+					{author?.name}
 				</Text>
 			</Box>
 			<Box>
@@ -34,12 +33,9 @@ const FeedItem = ({ data }) => {
 			<HStack mt={'10px'} justifyContent={'space-between'}>
 				<HStack>
 					<Icon as={FaRegComment} />
-					{/* <Text>{data.comments.length}</Text> */}
+					<Text>{data._count.comments}</Text>
 				</HStack>
-				<Text fontSize={'sm'}>
-					{/* {moment(data.createdAt).startOf('ss').fromNow()} */}
-					{dayJsFrom(data.createdAt)}
-				</Text>
+				<Text fontSize={'sm'}>{dayJsFrom(data.createdAt)}</Text>
 			</HStack>
 		</Box>
 	);

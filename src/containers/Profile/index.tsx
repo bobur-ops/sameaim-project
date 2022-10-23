@@ -17,27 +17,11 @@ import { useRouter } from 'next/router';
 import { Key } from 'react';
 import ClubsItem from './components/ClubsItem';
 
-const Profile = () => {
-	const { data: session, status } = useSession();
+const Profile = ({ user }: any) => {
 	const router = useRouter();
+	console.log(user);
 
-	// const getMyClubs = async () => {
-	// 	try {
-	// 		const userId = getCookie('user');
-	// 		setLoading(true);
-	// 		const response = await getClubsApi();
-	// 		const filteredClubs = response.data.data.filter(
-	// 			(item: any) => JSON.parse(item.author).userId === userId
-	// 		);
-	// 		setMyClubs(filteredClubs);
-	// 		setLoading(false);
-	// 	} catch (error) {
-	// 		setLoading(false);
-	// 		console.log(error);
-	// 	}
-	// };
-
-	if (!session)
+	if (!user)
 		return (
 			<Box display={'flex'} gap={'10px'}>
 				<Text fontWeight={'semibold'}>You are not authenticated</Text>
@@ -58,15 +42,15 @@ const Profile = () => {
 				<Box>
 					<Avatar
 						size={'2xl'}
-						name={session?.user?.name?.toString()}
-						src={session?.user?.image?.toString()}
+						name={user?.name?.toString()}
+						src={user?.image?.toString()}
 					/>
 				</Box>
 				<VStack>
 					<Text fontWeight={'semibold'} fontSize={'3xl'}>
-						{session.user?.name}
+						{user?.name}
 					</Text>
-					<Text>{session.user?.email}</Text>
+					<Text>{user?.email}</Text>
 				</VStack>
 			</Stack>
 			<Box>
@@ -74,8 +58,8 @@ const Profile = () => {
 					Joined Clubs
 				</Heading>
 				<Stack flex={'start'}>
-					{session?.user?.clubsParticipant?.length ? (
-						session?.user?.clubsParticipant?.map(
+					{user?.clubsParticipant?.length ? (
+						user?.clubsParticipant?.map(
 							(club: { id: Key | null | undefined }) => (
 								<NextLink
 									scroll={false}
@@ -96,8 +80,8 @@ const Profile = () => {
 				</Stack>
 				<Stack mt={70}>
 					<Heading as="h1">My Clubs</Heading>
-					{session?.user?.clubsOwner?.length ? (
-						session?.user?.clubsOwner?.map((club: any) => (
+					{user?.clubsOwner?.length ? (
+						user?.clubsOwner?.map((club: any) => (
 							<NextLink scroll={false} key={club.id} href={`/clubs/${club.id}`}>
 								<Link>
 									<ClubsItem data={club} />

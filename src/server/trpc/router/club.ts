@@ -10,7 +10,23 @@ export const clubRouter = router({
 		.query(({ ctx, input }) => {
 			return ctx.prisma.club.findFirst({
 				where: { id: input.id },
-				include: { posts: true, participants: true, creator: true },
+				include: {
+					posts: {
+						select: {
+							id: true,
+							title: true,
+							description: true,
+							createdAt: true,
+							_count: {
+								select: {
+									comments: true,
+								},
+							},
+						},
+					},
+					participants: true,
+					creator: true,
+				},
 			});
 		}),
 	getClubsRating: publicProcedure.query(async ({ ctx }) => {

@@ -1,52 +1,34 @@
 import { Box, Button, Heading, Text, Textarea } from '@chakra-ui/react';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { Key, useState } from 'react';
-import toast from 'react-hot-toast';
-// import { createComment, getClubApi, updateClubApi } from '../../../api/client';
-import { useGlobalContext } from '../../../context/GlobalContext';
-import { uniqueId } from '../../../utils/uniqueId';
+import { trpc } from '../../../utils/trpc';
 import Comment from '../components/Comment';
+
+type CommentPostData = {
+	text: string;
+	postId: string;
+};
 
 const PostPage = ({ data }: any) => {
 	const [commentValue, setCommentValue] = useState('');
-	const [buttonLoading, setButtonLoading] = useState(false);
 	const [comments, setComments] = useState(data.comments);
 
-	const { user } = useGlobalContext();
+	const { data: session, status } = useSession();
 	const router = useRouter();
-	const { id, postId } = router.query;
+	const { postId } = router.query;
+
+	const { mutate } = trpc.comment.createComment.useMutation({
+		onSettled: (data) => {
+			setComments((prev) => [data, ...prev]);
+		},
+	});
 
 	const submitComment = async () => {
-		const newComment = {
-			author: JSON.stringify(user),
-			text: commentValue,
-			commentId: uniqueId('comment'),
-		};
-		setComments((prev: any) => [newComment, ...prev]);
-		try {
-			setButtonLoading(true);
-			const club = await getClubApi(id);
-			const newPosts = club.data.posts.map(
-				(item: { postId: string | string[] | undefined; comments: any }) => ({
-					...item,
-					comments:
-						item.postId === postId
-							? [newComment, ...item.comments]
-							: [...item.comments],
-				})
-			);
-
-			const updatedClub = {
-				...club.data,
-				posts: newPosts,
-			};
-			const res = await updateClubApi(updatedClub, club.data._id);
-			setButtonLoading(false);
-			toast.success('Comment sent!');
-		} catch (error) {
-			setButtonLoading(false);
-			toast.error(`${error.response.data.message}`);
-		}
+		const data = {} as CommentPostData;
+		data.postId = postId as string;
+		data.text = commentValue as string;
+		mutate(data);
 	};
 
 	return (
@@ -62,25 +44,23 @@ const PostPage = ({ data }: any) => {
 			</Box>
 			<Box mt={20}>
 				<Heading mb={5}>Comments</Heading>
-				<Textarea
-					value={commentValue}
-					onChange={(e) => setCommentValue(e.target.value)}
-					placeholder="Write your comment here..."
-				/>
-				<Button
-					loadingText="Sending..."
-					isLoading={buttonLoading}
-					onClick={submitComment}
-					mt={5}
-					colorScheme={'blue'}
-				>
-					Send
-				</Button>
+				{session && (
+					<>
+						<Textarea
+							value={commentValue}
+							onChange={(e) => setCommentValue(e.target.value)}
+							placeholder="Write your comment here..."
+						/>
+						<Button onClick={submitComment} mt={5} colorScheme={'blue'}>
+							Send
+						</Button>
+					</>
+				)}
 			</Box>
 			<Box mt={'50px'}>
 				{comments.length ? (
 					comments.map((comment: any, idx: Key | null | undefined) => (
-						<Comment comment={comment} key={idx} clubId={id} postId={postId} />
+						<Comment comment={comment} key={idx} />
 					))
 				) : (
 					<Text>There are no comments yet</Text>

@@ -9,8 +9,16 @@ export const postRouter = router({
 			const post = await ctx.prisma.post.findFirst({
 				where: { id: input.postId },
 				include: {
+					comments: {
+						orderBy: {
+							createdAt: 'desc',
+						},
+						include: {
+							likedBy: true,
+							creator: true,
+						},
+					},
 					creator: true,
-					comments: true,
 				},
 			});
 

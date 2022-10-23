@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import FeedItem from './FeedItem';
 
-const Feed = ({ posts }) => {
+const Feed = ({ posts, author }) => {
 	const router = useRouter();
 	const { id } = router.query;
 
@@ -18,7 +18,7 @@ const Feed = ({ posts }) => {
 					posts.map((item) => (
 						<NextLink key={item.id} href={`/clubs/${id}/${item.id}`}>
 							<Link>
-								<FeedItem data={item} />
+								<FeedItem data={item} author={author} />
 							</Link>
 						</NextLink>
 					))

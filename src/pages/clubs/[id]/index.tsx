@@ -1,4 +1,3 @@
-// import { getClubApi } from '../../../api/client'
 import { Spinner, Stack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import Club from '../../../containers/Clubs/pages/Club';
@@ -9,6 +8,7 @@ const Page = () => {
 	const { id } = router.query;
 
 	const { data, isLoading } = trpc.club.getClub.useQuery({ id });
+
 	if (isLoading)
 		return (
 			<Stack>
@@ -27,13 +27,3 @@ const Page = () => {
 };
 
 export default Page;
-
-// export async function getServerSideProps({ params: { id } }: any) {
-// 	const data = trpc.club.getClub.useQuery({id});
-
-// 	return {
-// 		props: {
-// 			clubDetails: data,
-// 		},
-// 	};
-// }

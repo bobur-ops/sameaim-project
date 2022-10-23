@@ -1,19 +1,30 @@
 // import { getPostApi } from '../../../../api/client'
+import { Spinner, Stack } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import PostPage from '../../../../containers/Clubs/pages/PostPage';
+import { trpc } from '../../../../utils/trpc';
 
-const Page = ({ data }: any) => {
+const Page = () => {
+	const router = useRouter();
+	const { postId } = router.query;
+
+	const { data, isLoading } = trpc.post.getPost.useQuery({ postId });
+
+	if (isLoading)
+		return (
+			<Stack>
+				<Spinner
+					margin={'0 auto'}
+					thickness="4px"
+					speed="0.65s"
+					emptyColor="gray.200"
+					color="blue.500"
+					size="xl"
+				/>
+			</Stack>
+		);
+
 	return <PostPage data={data} />;
 };
 
 export default Page;
-
-export async function getServerSideProps({ params: { id, postId } }: any) {
-	// const data = await getPostApi(id, postId)
-	const data = { data: [] };
-
-	return {
-		props: {
-			data: data.data,
-		},
-	};
-}

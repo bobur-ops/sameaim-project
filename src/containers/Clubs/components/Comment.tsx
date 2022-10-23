@@ -1,67 +1,34 @@
 import { Avatar, Box, HStack, Icon, IconButton, Text } from '@chakra-ui/react';
-import { useState } from 'react';
-import { toast } from 'react-hot-toast';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 import { HiOutlineThumbUp, HiThumbUp } from 'react-icons/hi';
-// import { getClubApi, getPostApi, updateClubApi } from '../../../api/client'
-import { useGlobalContext } from '../../../context/GlobalContext';
+import { trpc } from '../../../utils/trpc';
 
-const Comment = ({ comment, clubId, postId }: any) => {
-	const author = JSON.parse(comment.author);
-	const { user } = useGlobalContext();
-	const [commentLikes, setCommentLikes] = useState(comment?.likes);
+const Comment = ({ comment }: any) => {
+	const author = comment?.creator;
 
-	const hasLiked = commentLikes?.some((like: any) => like === user?.userId);
+	const { data: session, status } = useSession();
+	const [commentLikes, setCommentLikes] = useState(comment?.likedBy);
+
+	const hasLiked = commentLikes?.some(
+		(like: any) => like.id === session?.user?.id
+	);
+
+	const { mutate } = trpc.comment.likeComment.useMutation({
+		onSettled: (data) => {
+			console.log(data);
+		},
+	});
 
 	const likeComment = async () => {
 		if (hasLiked) {
 			setCommentLikes((prev: any[]) =>
-				prev.filter((item: any) => item !== user.userId)
+				prev.filter((item: any) => item.id !== session?.user?.id)
 			);
 		} else {
-			setCommentLikes((prev: any) => [...prev, user.userId]);
+			setCommentLikes((prev: any) => [...prev, session?.user]);
 		}
-		submtLike();
-	};
-
-	const submtLike = async () => {
-		try {
-			const club = await getClubApi(clubId);
-			const post = await getPostApi(clubId, postId);
-			let newComments: any = [];
-			if (hasLiked) {
-				newComments = post.data.comments.map((item) => ({
-					...item,
-					likes:
-						item.commentId === comment.commentId
-							? item.likes.filter((like: any) => like !== user.userId)
-							: [...item.likes],
-				}));
-			} else {
-				newComments = post.data.comments.map(
-					(item: { commentId: any; likes: any }) => ({
-						...item,
-						likes:
-							item.commentId === comment.commentId
-								? [user.userId, ...item.likes]
-								: [...item.likes],
-					})
-				);
-			}
-
-			const newPosts = club.data.posts.map((item: any) => ({
-				...item,
-				comments: newComments,
-			}));
-
-			const updatedClub = {
-				...club.data,
-				posts: newPosts,
-			};
-			const res = await updateClubApi(updatedClub, club.data._id);
-			toast.success('Ready');
-		} catch (error) {
-			console.log(error);
-		}
+		mutate({ commentId: comment?.id });
 	};
 
 	const Likes = () => {
@@ -81,8 +48,8 @@ const Comment = ({ comment, clubId, postId }: any) => {
 	return (
 		<Box mb={'50px'}>
 			<HStack mb={0} ml={-2.5}>
-				<Avatar size="xs" name={author?.fullName} />
-				<Text fontSize={'sm'}>{author?.fullName}</Text>
+				<Avatar size="xs" name={author?.name} src={author?.image} />
+				<Text fontSize={'sm'}>{author?.name}</Text>
 			</HStack>
 			<Box pl={5} borderLeft={'2px'} borderColor={'gray.300'}>
 				<Text>{comment.text}</Text>

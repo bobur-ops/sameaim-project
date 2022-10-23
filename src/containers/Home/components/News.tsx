@@ -9,7 +9,7 @@ const News = ({ news }: any) => {
 				News
 			</Text>
 			<Box display="flex" justifyContent="center" flexWrap="wrap" gap="80px">
-				{news.length ? (
+				{[].length ? (
 					news.map((item: any) => <NewsItem key={item.id} data={item} />)
 				) : (
 					<Text fontSize={'3xl'}>There are no news</Text>

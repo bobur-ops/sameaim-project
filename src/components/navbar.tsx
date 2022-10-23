@@ -4,25 +4,13 @@ import {
 	Box,
 	Button,
 	Container,
-	Flex,
-	Heading,
 	HStack,
-	Icon,
-	IconButton,
 	Link,
-	Menu,
-	MenuButton,
-	MenuItem,
-	MenuList,
-	Stack,
 	Text,
 } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { BsFillPersonFill } from 'react-icons/bs';
-import { useGlobalContext } from '../context/GlobalContext';
 import Logo from './Logo';
 
 const LinkItem = ({ href, children }: any) => {
@@ -37,7 +25,6 @@ const LinkItem = ({ href, children }: any) => {
 
 const Navbar = (props: any) => {
 	const router = useRouter();
-	// const { user } = useGlobalContext();
 	const { data: session, status } = useSession();
 
 	return (
