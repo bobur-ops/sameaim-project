@@ -75,7 +75,7 @@ model Club {
   creatorId    String
   posts        Post[] @relation("clubPosts")
 
-  createAt DateTime @default(now())
+  createdAt DateTime @default(now())
 }
 
 model Post {

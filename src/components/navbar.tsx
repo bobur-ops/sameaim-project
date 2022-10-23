@@ -1,64 +1,69 @@
-import { HamburgerIcon } from '@chakra-ui/icons'
+import { HamburgerIcon } from '@chakra-ui/icons';
 import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  Flex,
-  Heading,
-  HStack,
-  Icon,
-  IconButton,
-  Link,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Stack,
-  Text
-} from '@chakra-ui/react'
-import NextLink from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import { BsFillPersonFill } from 'react-icons/bs'
-import { useGlobalContext } from '../context/GlobalContext'
-import Logo from './Logo'
+	Avatar,
+	Box,
+	Button,
+	Container,
+	Flex,
+	Heading,
+	HStack,
+	Icon,
+	IconButton,
+	Link,
+	Menu,
+	MenuButton,
+	MenuItem,
+	MenuList,
+	Stack,
+	Text,
+} from '@chakra-ui/react';
+import { useSession } from 'next-auth/react';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { BsFillPersonFill } from 'react-icons/bs';
+import { useGlobalContext } from '../context/GlobalContext';
+import Logo from './Logo';
 
-const LinkItem = ({ href, children }) => {
-  return (
-    <NextLink scroll={false} href={`#${href}`}>
-      <Link color="#000" fontWeight="600">
-        {children}
-      </Link>
-    </NextLink>
-  )
-}
+const LinkItem = ({ href, children }: any) => {
+	return (
+		<NextLink scroll={false} href={`#${href}`}>
+			<Link color="#000" fontWeight="600">
+				{children}
+			</Link>
+		</NextLink>
+	);
+};
 
-const Navbar = props => {
-  const router = useRouter()
-  const { user } = useGlobalContext()
+const Navbar = (props: any) => {
+	const router = useRouter();
+	// const { user } = useGlobalContext();
+	const { data: session, status } = useSession();
 
-  return (
-    <Box
-      as="nav"
-      w="100%"
-      {...props}
-      mb={'25px'}
-      borderBottom={'1px'}
-      borderColor={'gray.200'}
-    >
-      <Container
-        display="flex"
-        p={2}
-        maxW="container.lg"
-        wrap="wrap"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <Box cursor={'pointer'}>
-          <Logo />
-        </Box>
-        {/* <Stack
+	return (
+		<Box
+			as="nav"
+			w="100%"
+			{...props}
+			borderBottom={'1px'}
+			borderColor={'gray.100'}
+			position={'fixed'}
+			zIndex={10}
+			bg={'#ffffff95'}
+			style={{ backdropFilter: 'blur(10px)' }}
+		>
+			<Container
+				display="flex"
+				p={2}
+				maxW="container.lg"
+				flexWrap={'wrap'}
+				alignItems="center"
+				justifyContent="space-between"
+			>
+				<Box cursor={'pointer'}>
+					<Logo />
+				</Box>
+				{/* <Stack
           direction={{ base: 'column', md: 'row' }}
           display={{ base: 'none', md: 'flex' }}
           width={{ base: 'full', md: 'auto' }}
@@ -97,24 +102,24 @@ const Navbar = props => {
             </Menu>
           </Box>
         </Box> */}
-        {user === null ? (
-          <Button
-            onClick={() => router.push('/signup')}
-            bg="#7195E1"
-            color="white"
-            w="fit-content"
-          >
-            Sign In
-          </Button>
-        ) : (
-          <HStack cursor={'pointer'} onClick={() => router.push('/profile')}>
-            <Avatar name={user.fullName} size={'md'} />
-            <Text>{user?.fullName}</Text>
-          </HStack>
-        )}
-      </Container>
-    </Box>
-  )
-}
+				{session === null ? (
+					<Button
+						onClick={() => router.push('/signin')}
+						bg="#7195E1"
+						color="white"
+						w="fit-content"
+					>
+						Sign In
+					</Button>
+				) : (
+					<HStack cursor={'pointer'} onClick={() => router.push('/profile')}>
+						<Avatar name={session?.user?.name} size={'md'} />
+						<Text>{session?.user?.name}</Text>
+					</HStack>
+				)}
+			</Container>
+		</Box>
+	);
+};
 
-export default Navbar
+export default Navbar;

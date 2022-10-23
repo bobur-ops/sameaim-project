@@ -1,22 +1,19 @@
-import { useEffect } from 'react'
-import { getClubsApi } from '../../api/client'
-import Admin from '../../containers/Admin'
+// import { getClubsApi } from '../../api/client'
+import Admin from '../../containers/Admin';
 
-const Page = ({ clubs }) => {
-  useEffect(() => {
-    console.log(clubs)
-  }, [])
-  return <Admin />
-}
+const Page = ({ clubs }: any) => {
+	return <Admin />;
+};
 
-export default Page
+export default Page;
 
 export async function getServerSideProps() {
-  const { data } = await getClubsApi()
+	// const { data } = await getClubsApi()
+	const data = { data: [] };
 
-  return {
-    props: {
-      clubs: data.data
-    }
-  }
+	return {
+		props: {
+			clubs: data.data,
+		},
+	};
 }

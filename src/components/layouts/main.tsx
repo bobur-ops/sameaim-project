@@ -1,22 +1,16 @@
 /* eslint-disable @next/next/no-css-tags */
 import { Box, Container } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
 import Head from 'next/head';
-import Navbar from '../navbar.jsx';
+import Navbar from '../navbar';
+import Transition from '../Transition';
 
-const variants = {
-	hidden: { opacity: 0, x: -200, y: 0 },
-	enter: { opacity: 1, x: 0, y: 0 },
-	exit: { opacity: 0, x: 0, y: -100 },
-};
-
-const Main = ({ children, router }) => {
+const Main = ({ children, router }: any) => {
 	return (
 		<Box as="main" pb={8}>
 			<Head>
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<title>Same Aim</title>
-				<link rel="shortcut icon" href="/favicon.ico" />
+				<link rel="shortcut icon" href="/img/logo-image.png" />
 				<link
 					rel="stylesheet"
 					href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css"
@@ -27,16 +21,8 @@ const Main = ({ children, router }) => {
 			</Head>
 			<Navbar path={router.asPath} />
 
-			<Container maxW="container.lg" p={2} pl={3}>
-				<motion.main
-					initial="hidden"
-					animate="enter"
-					exit="exit"
-					variants={variants}
-					transition={{ type: 'linear' }}
-				>
-					{children}
-				</motion.main>
+			<Container maxW="container.lg" p={2} pl={3} pt={'100px'}>
+				<Transition>{children}</Transition>
 			</Container>
 		</Box>
 	);

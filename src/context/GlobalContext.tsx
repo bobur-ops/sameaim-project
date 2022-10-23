@@ -4,18 +4,17 @@ import toast from 'react-hot-toast';
 // import { createClubApi, getClubsApi, getUserApi } from '../api/client'
 import { uniqueId } from '../utils/uniqueId';
 
-const GlobalContext = createContext();
+const GlobalContext = createContext(null);
 
-export const GlobalContextProvider = ({ children }) => {
+export const GlobalContextProvider = ({ children }: any) => {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(false);
 
 	const getMyUser = async () => {
 		const cookieUser = getCookie('user');
 		if (cookieUser) {
-			const res = await getUserApi(cookieUser);
-
-			setUser(res.data);
+			// const res = await getUserApi(cookieUser);
+			// setUser(res.data);
 		}
 	};
 
@@ -23,7 +22,7 @@ export const GlobalContextProvider = ({ children }) => {
 		getMyUser();
 	}, []);
 
-	const createClub = async (clubData) => {
+	const createClub = async (clubData: any) => {
 		try {
 			toast('Processing...');
 			setLoading(true);
@@ -33,15 +32,15 @@ export const GlobalContextProvider = ({ children }) => {
 				clubId: uniqueId('club'),
 			};
 
-			const response = await createClubApi(data);
-			console.log(response);
-			toast.success(
-				`Club ${response.data.newClub.clubName} was created successfully`
-			);
-			setLoading(false);
-			setUser(response.data.newUser);
+			// const response = await createClubApi(data);
+			// console.log(response);
+			// toast.success(
+			// 	`Club ${response.data.newClub.clubName} was created successfully`
+			// );
+			// setLoading(false);
+			// setUser(response.data.newUser);
 			history.go(-1);
-		} catch (error) {
+		} catch (error: any) {
 			setLoading(false);
 			toast.error(`${error.response.data.message}`);
 		}
