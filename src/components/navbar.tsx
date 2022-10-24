@@ -78,7 +78,12 @@ const Navbar = (props: any) => {
 						Create Club
 					</LinkItem>
 				</Stack>
-				<Box flex={{ base: 1, md: 0 }} mr={5} align="right">
+				<Box
+					flex={{ base: 1, md: 0 }}
+					mr={5}
+					justifyContent={'flex-end'}
+					display={'flex'}
+				>
 					<Box ml={2} display={{ base: 'inline-block', md: 'none' }}>
 						<Menu>
 							<MenuButton
