@@ -5,7 +5,13 @@ import {
 	Button,
 	Container,
 	HStack,
+	IconButton,
 	Link,
+	Menu,
+	MenuButton,
+	MenuItem,
+	MenuList,
+	Stack,
 	Text,
 } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
@@ -15,7 +21,7 @@ import Logo from './Logo';
 
 const LinkItem = ({ href, children }: any) => {
 	return (
-		<NextLink scroll={false} href={`#${href}`}>
+		<NextLink href={href} passHref>
 			<Link color="#000" fontWeight="600">
 				{children}
 			</Link>
@@ -36,8 +42,7 @@ const Navbar = (props: any) => {
 			borderColor={'gray.100'}
 			position={'fixed'}
 			zIndex={10}
-			bg={'#ffffff95'}
-			style={{ backdropFilter: 'blur(10px)' }}
+			bg={'#ffffff'}
 		>
 			<Container
 				display="flex"
@@ -50,45 +55,57 @@ const Navbar = (props: any) => {
 				<Box cursor={'pointer'}>
 					<Logo />
 				</Box>
-				{/* <Stack
-          direction={{ base: 'column', md: 'row' }}
-          display={{ base: 'none', md: 'flex' }}
-          width={{ base: 'full', md: 'auto' }}
-          gap={71}
-          alignItems="center"
-          mt={{ base: 4, md: 0 }}
-        >
-          <LinkItem href="about">About us</LinkItem>
-          <LinkItem href="news">News</LinkItem>
-          <LinkItem href="rating">Rating</LinkItem>
-          <LinkItem href="create">Create Club</LinkItem>
-        </Stack>
-        <Box flex={{ base: 1, md: 0 }} mr={5} align="right">
-          <Box ml={2} display={{ base: 'inline-block', md: 'none' }}>
-            <Menu>
-              <MenuButton
-                as={IconButton}
-                icon={<HamburgerIcon />}
-                variant="outline"
-                aria-label="Options"
-              />
-              <MenuList>
-                <NextLink href="#about" passHref>
-                  <MenuItem as={Link}>About us</MenuItem>
-                </NextLink>
-                <NextLink href="#news" passHref>
-                  <MenuItem as={Link}>News</MenuItem>
-                </NextLink>
-                <NextLink href="#rating" passHref>
-                  <MenuItem as={Link}>Rating</MenuItem>
-                </NextLink>
-                <NextLink href="#create" passHref>
-                  <MenuItem as={Link}>Create Club</MenuItem>
-                </NextLink>
-              </MenuList>
-            </Menu>
-          </Box>
-        </Box> */}
+				<Stack
+					direction={{ base: 'column', md: 'row' }}
+					display={{ base: 'none', md: 'flex' }}
+					width={{ base: 'full', md: 'auto' }}
+					gap={71}
+					alignItems="center"
+					mt={{ base: 4, md: 0 }}
+				>
+					{session !== null && (
+						<LinkItem passHref href="/my_feed">
+							My feed
+						</LinkItem>
+					)}
+					<LinkItem passHref href="/search">
+						Search
+					</LinkItem>
+					<LinkItem passHref href="/recent_posts">
+						Recent Posts
+					</LinkItem>
+					<LinkItem passHref href="/create_club">
+						Create Club
+					</LinkItem>
+				</Stack>
+				<Box flex={{ base: 1, md: 0 }} mr={5} align="right">
+					<Box ml={2} display={{ base: 'inline-block', md: 'none' }}>
+						<Menu>
+							<MenuButton
+								as={IconButton}
+								icon={<HamburgerIcon />}
+								variant="outline"
+								aria-label="Options"
+							/>
+							<MenuList>
+								{session !== null && (
+									<NextLink href="/my_feed" passHref>
+										<MenuItem as={Link}>My Feed</MenuItem>
+									</NextLink>
+								)}
+								<NextLink href="/search" passHref>
+									<MenuItem as={Link}>Search</MenuItem>
+								</NextLink>
+								<NextLink href="/recent_posts" passHref>
+									<MenuItem as={Link}>Recent Posts</MenuItem>
+								</NextLink>
+								<NextLink href="/create_club" passHref>
+									<MenuItem as={Link}>Create Club</MenuItem>
+								</NextLink>
+							</MenuList>
+						</Menu>
+					</Box>
+				</Box>
 				{session === null ? (
 					<Button
 						onClick={() => router.push('/signin')}

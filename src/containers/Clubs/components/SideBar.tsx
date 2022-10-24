@@ -10,7 +10,7 @@ const SideBar = ({ members }: any) => {
 			</Text>
 
 			{members?.map((item: any) => (
-				<NextLink key={item.id} href={`/users/${item.id}`}>
+				<NextLink key={item.id} href={`/user/${item.id}`}>
 					<Link
 						color={'blue.500'}
 						display={'flex'}

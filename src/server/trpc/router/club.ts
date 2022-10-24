@@ -23,6 +23,9 @@ export const clubRouter = router({
 								},
 							},
 						},
+						orderBy: {
+							createdAt: 'desc',
+						},
 					},
 					participants: true,
 					creator: true,
@@ -51,15 +54,18 @@ export const clubRouter = router({
 	getClubBySearch: publicProcedure
 		.input(z.object({ searchQuery: z.string() }))
 		.query(async ({ ctx, input }) => {
-			const clubs = await ctx.prisma.club.findMany({
-				where: {
-					name: {
-						contains: input.searchQuery,
+			if (input.searchQuery) {
+				const clubs = await ctx.prisma.club.findMany({
+					where: {
+						name: {
+							contains: input.searchQuery,
+						},
 					},
-				},
-			});
-
-			return clubs;
+				});
+				return clubs;
+			} else {
+				return [];
+			}
 		}),
 
 	createClub: protectedProcedure

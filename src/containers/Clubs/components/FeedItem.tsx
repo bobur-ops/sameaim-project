@@ -26,7 +26,11 @@ const FeedItem = ({ data, author }: any) => {
 				<Text fontWeight={'semibold'} fontSize={'2xl'}>
 					{data.title}
 				</Text>
-				<Text>{data.description}</Text>
+				<Text>
+					{data.description.length > 200
+						? `${data.description.slice(0, 200)}...`
+						: data.description}
+				</Text>
 			</Box>
 			<HStack mt={'10px'} justifyContent={'space-between'}>
 				<HStack>

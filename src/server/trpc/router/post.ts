@@ -6,6 +6,27 @@ export const postRouter = router({
 	getAllPosts: publicProcedure.query(({ ctx }) => {
 		return ctx.prisma.post.findMany();
 	}),
+	getRecentPosts: publicProcedure
+		.input(z.object({ limit: z.string() }))
+		.query(async ({ input, ctx }) => {
+			const posts = await ctx.prisma.post.findMany({
+				orderBy: {
+					createdAt: 'desc',
+				},
+				include: {
+					club: true,
+					_count: {
+						select: {
+							comments: true,
+						},
+					},
+				},
+			});
+
+			const results = posts.slice(0, Number(input.limit));
+
+			return { posts: results, limit: input.limit };
+		}),
 	getPost: publicProcedure
 		.input(z.object({ postId: z.string() }))
 		.query(async ({ ctx, input }) => {

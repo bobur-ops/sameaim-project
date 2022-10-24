@@ -1,4 +1,4 @@
-import { Box, Heading, HStack, Link, Text } from '@chakra-ui/react';
+import { Box, Heading, HStack, Link, Stack, Text } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -17,7 +17,17 @@ const CreateClub = () => {
 	const submitClub = (data: any) => {
 		mutate(data);
 	};
-
+	if (!session)
+		return (
+			<HStack>
+				<Text>You are not authorized</Text>
+				<NextLink href={'/signin'}>
+					<Link color={'blue'} fontWeight={'semibold'}>
+						Please Authorize to create new club
+					</Link>
+				</NextLink>
+			</HStack>
+		);
 	return (
 		<Box>
 			<Heading mb={10} textAlign="center">
