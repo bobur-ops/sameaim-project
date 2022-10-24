@@ -57,8 +57,7 @@
 		"@types/draftjs-to-html": "^0.8.1",
 		"@types/nprogress": "^0.2.0",
 		"@types/quill": "^2.0.9",
-		"@types/react-html-parser": "^2.0.2",
-		"@types/react-icons": "^3.0.0"
+		"@types/react-html-parser": "^2.0.2"
 	},
 	"ct3aMetadata": {
 		"initVersion": "6.5.0"

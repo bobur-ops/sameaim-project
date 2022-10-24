@@ -7,8 +7,9 @@ import { trpc } from '../../../../utils/trpc';
 const Page = () => {
 	const router = useRouter();
 	const { postId } = router.query;
+	const id = postId as string;
 
-	const { data, isLoading } = trpc.post.getPost.useQuery({ postId });
+	const { data, isLoading } = trpc.post.getPost.useQuery({ postId: id });
 
 	if (isLoading)
 		return (

@@ -6,7 +6,9 @@ import { trpc } from '../../utils/trpc';
 const Page = () => {
 	const { data: session } = useSession();
 	const userId = session?.user?.id.toString();
-	const { data, isLoading } = trpc.user.getUser.useQuery({ id: userId });
+	const { data, isLoading } = trpc.user.getUser.useQuery({
+		id: userId as string,
+	});
 
 	if (isLoading)
 		return (

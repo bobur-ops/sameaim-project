@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import FeedItem from './FeedItem';
 
-const Feed = ({ posts, author }) => {
+const Feed = ({ posts, author }: any) => {
 	const router = useRouter();
 	const { id } = router.query;
 
@@ -15,7 +15,7 @@ const Feed = ({ posts, author }) => {
 			</Text>
 			<Box mt={'5'}>
 				{posts.length ? (
-					posts.map((item) => (
+					posts.map((item: any) => (
 						<NextLink key={item.id} href={`/clubs/${id}/${item.id}`}>
 							<Link>
 								<FeedItem data={item} author={author} />

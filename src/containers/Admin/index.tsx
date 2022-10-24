@@ -9,8 +9,8 @@ const Admin = ({ clubs, posts, users }: any) => {
 	const router = useRouter();
 
 	useEffect(() => {
-		const admin: any = JSON.parse(localStorage.getItem('admin'));
-		if (admin.login !== 'admin' || admin.password !== 'admin123') {
+		const admin: any = localStorage.getItem('admin');
+		if (admin) {
 			router.push('/admin/login');
 		}
 	});

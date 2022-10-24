@@ -19,12 +19,12 @@ const Club = ({ clubDetails }: any) => {
 	const isAuthor = session?.user?.id === clubDetails?.creator?.id;
 	const joinMutation = trpc.club.joinClub.useMutation({
 		onSettled: (data) => {
-			router.reload(window.location.pathname);
+			router.reload();
 		},
 	});
 	const leaveMutation = trpc.club.leaveClub.useMutation({
 		onSettled: (data) => {
-			router.reload(window.location.pathname);
+			router.reload();
 		},
 	});
 	const { id } = router.query;

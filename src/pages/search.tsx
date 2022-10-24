@@ -1,4 +1,3 @@
-import { Spinner, Stack } from '@chakra-ui/react';
 import { useState } from 'react';
 import Search from '../containers/Search/Search';
 import { trpc } from '../utils/trpc';

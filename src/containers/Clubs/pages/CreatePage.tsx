@@ -16,8 +16,6 @@ import toast from 'react-hot-toast';
 import TextEditor from '../../../components/TextEditor';
 import { trpc } from '../../../utils/trpc';
 
-import { uniqueId } from '../../../utils/uniqueId';
-
 const CreatePage = ({ clubID, authorId }: any) => {
 	const [title, setTitle] = useState('');
 	const [contentValue, setContentValue] = useState('');
@@ -61,19 +59,8 @@ const CreatePage = ({ clubID, authorId }: any) => {
 			title,
 			content: contentValue,
 			description,
-			clubId: id,
+			clubId: id as string,
 		};
-		// try {
-		// 	setLoading(true);
-		// 	const res = await createPostApi(clubID, data);
-		// 	setLoading(false);
-		// 	router.push(`/clubs/${id}`);
-		// 	setLoading(false);
-		// } catch (error) {
-		// 	setLoading(false);
-		// 	console.log(error: any);
-		// 	toast.error(`${error.response.data.message}`);
-		// }
 
 		mutate(data);
 	};

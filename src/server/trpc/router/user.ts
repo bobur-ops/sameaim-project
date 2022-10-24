@@ -44,7 +44,9 @@ export const userRouter = router({
 			});
 
 			return res.slice(0, Number(input.limit)).sort(function (a: any, b: any) {
-				return new Date(b.createdAt) - new Date(a.createdAt);
+				return (
+					new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+				);
 			});
 		}),
 });

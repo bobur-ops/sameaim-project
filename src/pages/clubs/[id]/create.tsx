@@ -7,7 +7,8 @@ import { trpc } from '../../../utils/trpc';
 const Page = () => {
 	const router = useRouter();
 	const { id } = router.query;
-	const { data, isLoading } = trpc.club.getClub.useQuery({ id });
+	const strId = id as string;
+	const { data, isLoading } = trpc.club.getClub.useQuery({ id: strId });
 
 	if (isLoading)
 		return (
