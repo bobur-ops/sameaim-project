@@ -111,7 +111,7 @@ const Navbar = (props: any) => {
 						</Menu>
 					</Box>
 				</Box>
-				{session === null ? (
+				{session === null || status !== 'authenticated' ? (
 					<Button
 						onClick={() => router.push('/signin')}
 						bg="#7195E1"

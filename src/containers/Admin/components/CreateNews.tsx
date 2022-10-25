@@ -32,15 +32,24 @@ const CreateNews = () => {
 			<Stack spacing={6} mt={5}>
 				<FormControl isRequired>
 					<FormLabel>Url for news&apos; thumbnail</FormLabel>
-					<Input type="text" onChange={(e) => setImageUrl(e.target.value)} />
+					<Input
+						type="text"
+						value={imageUrl}
+						onChange={(e) => setImageUrl(e.target.value)}
+					/>
 				</FormControl>
 				<FormControl isRequired>
 					<FormLabel>Title for your news</FormLabel>
-					<Input type="text" onChange={(e) => setTitle(e.target.value)} />
+					<Input
+						type="text"
+						value={title}
+						onChange={(e) => setTitle(e.target.value)}
+					/>
 				</FormControl>
 				<FormControl isRequired>
 					<FormLabel>Content</FormLabel>
 					<Textarea
+						value={content}
 						minH={'200px'}
 						placeholder="Write here..."
 						onChange={(e) => setContent(e.target.value)}
