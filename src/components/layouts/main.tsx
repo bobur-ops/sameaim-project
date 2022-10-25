@@ -18,6 +18,10 @@ const Main = ({ children, router }: any) => {
 					crossOrigin="anonymous"
 					referrerPolicy="no-referrer"
 				/>
+				<link
+					rel="stylesheet"
+					href="https://cdnjs.cloudflare.com/ajax/libs/react-quill/1.0.0-beta-2/quill.snow.css"
+				/>
 			</Head>
 			<Navbar path={router.asPath} />
 
