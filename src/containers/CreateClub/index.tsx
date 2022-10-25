@@ -2,6 +2,8 @@ import { Box, Heading, HStack, Link, Stack, Text } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { trpc } from '../../utils/trpc';
 import Form from './components/Form';
 
@@ -9,7 +11,7 @@ const CreateClub = () => {
 	const { data: session, status } = useSession();
 
 	const router = useRouter();
-	const { mutate } = trpc.club.createClub.useMutation({
+	const { mutate, isLoading } = trpc.club.createClub.useMutation({
 		onSettled: (data) => {
 			router.push(`/clubs/${data?.id}`);
 		},
@@ -43,7 +45,7 @@ const CreateClub = () => {
 					</NextLink>
 				</HStack>
 			) : (
-				<Form create={submitClub} loading={false} />
+				<Form create={submitClub} loading={isLoading} />
 			)}
 		</Box>
 	);

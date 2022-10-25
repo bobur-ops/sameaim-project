@@ -10,18 +10,11 @@ const Main = ({ children, router }: any) => {
 			<Head>
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<title>Same Aim</title>
+				<meta
+					name="description"
+					content="SameAim platform for gathering like-minded people together."
+				/>
 				<link rel="shortcut icon" href="/img/logo-image.png" />
-				<link
-					rel="stylesheet"
-					href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css"
-					integrity="sha512-42kB9yDlYiCEfx2xVwq0q7hT4uf26FUgSIZBK8uiaEnTdShXjwr8Ip1V4xGJMg3mHkUt9nNuTDxunHF0/EgxLQ=="
-					crossOrigin="anonymous"
-					referrerPolicy="no-referrer"
-				/>
-				<link
-					rel="stylesheet"
-					href="https://cdnjs.cloudflare.com/ajax/libs/react-quill/1.0.0-beta-2/quill.snow.css"
-				/>
 			</Head>
 			<Navbar path={router.asPath} />
 

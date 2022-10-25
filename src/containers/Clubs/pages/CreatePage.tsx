@@ -20,7 +20,6 @@ const CreatePage = ({ clubID, authorId }: any) => {
 	const [title, setTitle] = useState('');
 	const [contentValue, setContentValue] = useState('');
 	const [description, setDescription] = useState('');
-	const [loading, setLoading] = useState(false);
 	const { data: session, status } = useSession();
 
 	const router = useRouter();
@@ -31,23 +30,14 @@ const CreatePage = ({ clubID, authorId }: any) => {
 			router.push('/');
 		}
 	}, []);
-
-	// const { mutate } = trpc.club.createClub.useMutation({
-	// 	onSettled: (data) => {
-	// 		router.push(`/clubs/${data?.id}`);
-	// 	},
-	// });
-	// const submitClub = (data: any) => {
-	// 	mutate(data);
-	// };
-	const { mutate } = trpc.post.createPost.useMutation({
+	const { mutate, isLoading } = trpc.post.createPost.useMutation({
 		onSettled: (data) => {
 			router.push(`/clubs/${id}`);
 		},
 	});
 
 	const isDisabled = () => {
-		if (title && contentValue) {
+		if (title && contentValue && !isLoading) {
 			return false;
 		} else {
 			return true;
@@ -98,7 +88,7 @@ const CreatePage = ({ clubID, authorId }: any) => {
 					onClick={submitNewPost}
 					colorScheme={'blue'}
 					disabled={isDisabled()}
-					isLoading={loading}
+					isLoading={isLoading}
 					loadingText="Creating post..."
 				>
 					Create Post

@@ -14,7 +14,7 @@ const Form = ({ create, loading }: any) => {
 	const [description, setDescription] = useState('');
 
 	const isBtnDisabled = () => {
-		if (name && description) {
+		if (name && description && !loading) {
 			return false;
 		} else {
 			return true;

@@ -14,7 +14,6 @@ const Club = ({ clubDetails }: any) => {
 	const isMember = clubDetails?.participants.some(
 		(item: any) => item.id === session?.user?.id
 	);
-	console.log(isMember);
 
 	const isAuthor = session?.user?.id === clubDetails?.creator?.id;
 	const joinMutation = trpc.club.joinClub.useMutation({
