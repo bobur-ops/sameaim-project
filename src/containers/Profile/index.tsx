@@ -19,7 +19,6 @@ import ClubsItem from './components/ClubsItem';
 
 const Profile = ({ user }: any) => {
 	const router = useRouter();
-	console.log(user);
 
 	if (!user)
 		return (

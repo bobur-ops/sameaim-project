@@ -1,5 +1,6 @@
-import { Box, Button, Image, Text } from '@chakra-ui/react';
+import { AspectRatio, Box, Button, Image, Text } from '@chakra-ui/react';
 import styled from '@emotion/styled';
+import { useEffect, useRef } from 'react';
 
 const ImageGradient = styled.div`
 	background: linear-gradient(
@@ -38,6 +39,11 @@ const ImageOverlay = styled.div`
 
 const Header = () => {
 	const headerImage = '/img/header.jpg';
+	const video: any = useRef();
+	useEffect(() => {
+		video?.current?.play();
+	}, []);
+
 	return (
 		<div>
 			<Box position="relative" mb={114}>
@@ -53,12 +59,12 @@ const Header = () => {
 				/> */}
 				<Box borderRadius={'10px'} overflow={'hidden'}>
 					<video
+						poster="/img/header.jpg"
 						src={'/header-vid.mp4'}
 						loop
 						controls={false}
 						muted
-						autoPlay
-						className="w-full h-full object-cover"
+						ref={video}
 					/>
 				</Box>
 				{/* <Box

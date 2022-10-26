@@ -48,7 +48,11 @@ const Club = ({ clubDetails }: any) => {
 				</Box>
 			) : session ? (
 				<Box mb={3}>
-					<Button colorScheme={isMember ? 'red' : 'green'} onClick={joinToClub}>
+					<Button
+						isLoading={joinMutation.isLoading || leaveMutation.isLoading}
+						colorScheme={isMember ? 'red' : 'green'}
+						onClick={joinToClub}
+					>
 						{isMember ? 'Leave' : 'Join'}
 					</Button>
 				</Box>

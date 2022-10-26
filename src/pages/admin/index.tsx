@@ -21,8 +21,6 @@ const Page = () => {
 			</Stack>
 		);
 
-	console.log(clubs);
-
 	return <Admin clubs={clubs} users={users} posts={posts} />;
 };
 

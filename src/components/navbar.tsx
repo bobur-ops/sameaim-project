@@ -63,7 +63,7 @@ const Navbar = (props: any) => {
 					alignItems="center"
 					mt={{ base: 4, md: 0 }}
 				>
-					{session !== null && (
+					{session !== null && status === 'authenticated' && (
 						<LinkItem passHref href="/my_feed">
 							My feed
 						</LinkItem>
@@ -93,7 +93,7 @@ const Navbar = (props: any) => {
 								aria-label="Options"
 							/>
 							<MenuList>
-								{session !== null && (
+								{session !== null && status === 'authenticated' && (
 									<NextLink href="/my_feed" passHref>
 										<MenuItem as={Link}>My Feed</MenuItem>
 									</NextLink>

@@ -97,14 +97,19 @@ const PostPage = ({ data }: any) => {
 
 			<Box mt={20}>
 				<Heading mb={5}>Comments</Heading>
-				{session && (
+				{session && status === 'authenticated' && (
 					<>
 						<Textarea
 							value={commentValue}
 							onChange={(e) => setCommentValue(e.target.value)}
 							placeholder="Write your comment here..."
 						/>
-						<Button onClick={submitComment} mt={5} colorScheme={'blue'}>
+						<Button
+							isLoading={commentMuatate.isLoading}
+							onClick={submitComment}
+							mt={5}
+							colorScheme={'blue'}
+						>
 							Send
 						</Button>
 					</>

@@ -54,17 +54,15 @@ const formats = [
 
 const TextEditor = ({ setContentValue, value }: any) => {
 	return (
-		<Box border={'1px'} borderColor={'gray.200'} pb={5}>
-			<QuillNoSSRWrapper
-				bounds={'.app'}
-				modules={modules}
-				formats={formats}
-				onChange={setContentValue}
-				placeholder="Write your post here. You can edit your text by tools above"
-				value={value}
-				theme="snow"
-			/>
-		</Box>
+		<QuillNoSSRWrapper
+			bounds={'.app'}
+			modules={modules}
+			formats={formats}
+			onChange={setContentValue}
+			placeholder="Write your post here. You can edit your text by tools above"
+			value={value}
+			theme="snow"
+		/>
 	);
 };
 
