@@ -36,7 +36,7 @@ const Rating = ({ data, isLoading }: any) => {
 			) : (
 				<>
 					<TableContainer mt={85}>
-						<Table variant="simple" size={{ base: 'sm', md: 'lg' }}>
+						<Table variant="simple" size={{ base: 'lg', md: 'lg' }}>
 							<TableCaption>Based on number of members</TableCaption>
 							<Thead>
 								<Tr>
