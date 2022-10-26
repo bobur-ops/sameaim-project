@@ -9,12 +9,15 @@ import {
 	Stack,
 } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-// import { createPostApi, getUserApi } from '../../../api/client'
-import TextEditor from '../../../components/TextEditor';
 import { trpc } from '../../../utils/trpc';
+
+const TextEditor = dynamic(import('../../../components/TextEditor'), {
+	ssr: false,
+	loading: () => <p>Loading ...</p>,
+});
 
 const CreatePage = ({ clubID, authorId }: any) => {
 	const [title, setTitle] = useState('');
@@ -81,9 +84,9 @@ const CreatePage = ({ clubID, authorId }: any) => {
 				</FormControl>
 				<FormControl isRequired>
 					<FormLabel>Content</FormLabel>
+					<FormHelperText mb={5}>Highlight the text to edit </FormHelperText>
 					<TextEditor value={contentValue} setContentValue={setContentValue} />
 				</FormControl>
-
 				<Button
 					onClick={submitNewPost}
 					colorScheme={'blue'}
