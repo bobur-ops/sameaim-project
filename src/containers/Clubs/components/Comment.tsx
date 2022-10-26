@@ -14,9 +14,7 @@ const Comment = ({ comment }: any) => {
 		(like: any) => like.id === session?.user?.id
 	);
 
-	const { mutate } = trpc.comment.likeComment.useMutation({
-		onSettled: (data) => {},
-	});
+	const { mutate } = trpc.comment.likeComment.useMutation();
 
 	const likeComment = async () => {
 		if (hasLiked) {
