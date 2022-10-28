@@ -1,4 +1,4 @@
-import { Spinner, Stack } from '@chakra-ui/react';
+import { Skeleton, Spinner, Stack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import User from '../../containers/User/User';
 import { trpc } from '../../utils/trpc';
@@ -9,20 +9,11 @@ const Page = () => {
 	const { data, isLoading } = trpc.user.getUser.useQuery({
 		id: userId as string,
 	});
-	if (isLoading)
-		return (
-			<Stack>
-				<Spinner
-					margin={'0 auto'}
-					thickness="4px"
-					speed="0.65s"
-					emptyColor="gray.200"
-					color="blue.500"
-					size="xl"
-				/>
-			</Stack>
-		);
-	return <User user={data} />;
+	return (
+		<Skeleton borderRadius={'12px'} isLoaded={!isLoading}>
+			<User user={data} />
+		</Skeleton>
+	);
 };
 
 export default Page;

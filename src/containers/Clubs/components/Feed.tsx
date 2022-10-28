@@ -14,8 +14,8 @@ const Feed = ({ posts, author }: any) => {
 				Feed
 			</Text>
 			<Box mt={'5'}>
-				{posts.length ? (
-					posts.map((item: any) => (
+				{posts?.length ? (
+					posts?.map((item: any) => (
 						<NextLink key={item.id} href={`/clubs/${id}/${item.id}`}>
 							<Link>
 								<FeedItem data={item} author={author} />

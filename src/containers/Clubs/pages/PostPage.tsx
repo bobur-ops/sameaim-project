@@ -68,7 +68,7 @@ const PostPage = ({ data }: any) => {
 							onClick={() =>
 								postMutate.mutate({
 									postId: postId as string,
-									postCreatorId: data.creator.id,
+									postCreatorId: data?.creator.id,
 								})
 							}
 							colorScheme={'red'}
@@ -78,11 +78,11 @@ const PostPage = ({ data }: any) => {
 					</ModalFooter>
 				</ModalContent>
 			</Modal>
-			<Heading mb={10}>{data.title}</Heading>
+			<Heading mb={10}>{data?.title}</Heading>
 			<Box borderBottom={'1px'} borderColor={'gray.300'} pb={5}>
 				<div className="ql-snow">
 					<div
-						dangerouslySetInnerHTML={{ __html: data.content }}
+						dangerouslySetInnerHTML={{ __html: data?.content }}
 						className="ql-editor"
 					></div>
 				</div>

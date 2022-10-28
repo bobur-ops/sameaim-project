@@ -63,10 +63,10 @@ const Club = ({ clubDetails }: any) => {
 			)}
 			<Box display={'flex'} gap={10}>
 				<Box flex={1}>
-					<Feed posts={clubDetails.posts} author={clubDetails.creator} />
+					<Feed posts={clubDetails?.posts} author={clubDetails?.creator} />
 				</Box>
 				<Box display={{ base: 'none', md: 'block' }} minW={'25%'}>
-					<SideBar members={clubDetails.participants} />
+					<SideBar members={clubDetails?.participants} />
 				</Box>
 			</Box>
 		</Box>
