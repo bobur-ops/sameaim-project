@@ -43,6 +43,7 @@ const Navbar = (props: any) => {
 			position={'fixed'}
 			zIndex={10}
 			bg={'#ffffff'}
+			paddingX={{ base: '20px', md: '0' }}
 		>
 			<Container
 				display="flex"
@@ -127,7 +128,12 @@ const Navbar = (props: any) => {
 							size={'md'}
 							src={session?.user?.image?.toString()}
 						/>
-						<Text>{session?.user?.name}</Text>
+						<Text
+							fontWeight={'semibold'}
+							display={{ base: 'none', md: 'block' }}
+						>
+							{session?.user?.name}
+						</Text>
 					</HStack>
 				)}
 			</Container>
