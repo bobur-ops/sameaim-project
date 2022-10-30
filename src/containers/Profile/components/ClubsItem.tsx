@@ -50,14 +50,14 @@ const ClubsItem = ({ data, isMyClub = false }: any) => {
 							</ModalBody>
 
 							<ModalFooter>
-								<Button colorScheme="green" mr={3} onClick={onClose}>
-									No
+								<Button mr={3} onClick={onClose}>
+									Cancel
 								</Button>
 								<Button
 									onClick={() => mutate({ clubId: data.id })}
 									colorScheme={'red'}
 								>
-									Yes
+									Delete
 								</Button>
 							</ModalFooter>
 						</ModalContent>

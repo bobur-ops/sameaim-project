@@ -18,7 +18,7 @@ const Search = ({ setSearchQuery, clubs, isLoading }: any) => {
 			<Stack>
 				<Input
 					pr="4.5rem"
-					placeholder="Enter password"
+					placeholder="Enter club name"
 					onChange={(e) => setQuery(e.target.value)}
 				/>
 				<Button onClick={() => setSearchQuery(query)}>Search</Button>
