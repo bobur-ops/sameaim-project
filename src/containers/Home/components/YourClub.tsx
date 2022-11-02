@@ -4,25 +4,21 @@ import NextLink from 'next/link';
 const YourClub = () => {
 	return (
 		<Box>
-			<Heading mt={50} textAlign={'center'}>
-				Do you want to be a leader of your club?
+			<Heading mt={50} textAlign={'center'} letterSpacing={'0.1em'}>
+				Build a strong <br /> community of people
 			</Heading>
 			<Stack mt={15}>
-				<Text fontSize={'lg'}>
-					Create a club and gather all fans of your concept together
-				</Text>
-				<Text maxW={'500px'}>
-					To do this, first you need to{' '}
-					<NextLink scroll={false} href="/signup">
-						<Link color={'blue'} fontWeight={'semibold'}>
-							authorize
-						</Link>
-					</NextLink>{' '}
-					and then press button below, and you will get into the form to create
-					new club
+				<Text
+					fontSize={'2xl'}
+					textAlign={'center'}
+					maxW={'510px'}
+					margin={'0 auto 15px'}
+				>
+					Same aim is your chance to create team and make your dream about being
+					a leader come true{' '}
 				</Text>
 				<NextLink scroll={false} href="/create_club">
-					<Link>
+					<Link textAlign={'center'}>
 						<Button colorScheme={'blue'}>Create Club</Button>
 					</Link>
 				</NextLink>
