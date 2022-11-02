@@ -59,7 +59,7 @@ export default function Footer() {
 				align={{ base: 'center', md: 'center' }}
 			>
 				<Flex flexDir={'column'}>
-					<Text>© 2022 Chakra Templates. All rights reserved</Text>
+					<Text>© 2022. All rights reserved</Text>
 					<Text>Created by Madina and Muxammadbobur</Text>
 				</Flex>
 				<Stack direction={'row'} spacing={6}>
