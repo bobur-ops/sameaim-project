@@ -19,10 +19,9 @@ const Main = ({ children, router }: any) => {
 			</Head>
 			<Navbar path={router.asPath} />
 
-			<Container maxW="container.lg" p={2} pl={3} pt={'100px'} pb={8}>
+			<Container maxW="container.lg" p={2} pl={3} pt={'100px'}>
 				<Transition>{children}</Transition>
 			</Container>
-			<Footer />
 		</Box>
 	);
 };
